@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   View,
   Grid,
@@ -7,56 +8,33 @@ import {
   Placeholder,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { MdRemoveRedEye, MdWeb, MdPermIdentity } from "react-icons/md";
+import { MdFoodBank, MdWeb,   } from "react-icons/md";
 
 import MiniStatistics from "./MiniStatistics";
-import TrafficSources from "./TrafficSources";
 import SalesSummary from "./SalesSummary";
 import TrafficSummary from "./TrafficSummary";
-import CustomersSummary from "./CustomersSummary";
-
+import LoadingButton from "./LoadingButton";
 import "./Dashboard.css";
 
 /// Mock Data
 const barChartDataDemo = [
   {
-    name: "Web",
+    name: "Consumo",
     data: [
       11, 8, 9, 10, 3, 11, 11, 11, 12, 13, 2, 12, 5, 8, 22, 6, 8, 6, 4, 1, 8,
-      24, 29, 51, 40, 47, 23, 26, 50, 26, 22, 27, 46, 47, 81, 46, 40,
-    ],
-  },
-  {
-    name: "Social",
-    data: [
-      7, 5, 4, 3, 3, 11, 4, 7, 5, 12, 12, 15, 13, 12, 6, 7, 7, 1, 5, 5, 2, 12,
-      4, 6, 18, 3, 5, 2, 13, 15, 20, 47, 18, 15, 11, 10, 9,
-    ],
-  },
-  {
-    name: "Other",
-    data: [
-      4, 9, 11, 7, 8, 3, 6, 5, 5, 4, 6, 4, 11, 10, 3, 6, 7, 5, 2, 8, 4, 9, 9, 2,
-      6, 7, 5, 1, 8, 3, 12, 3, 4, 9, 7, 11, 10,
+      24, 29, 51,
     ],
   },
 ];
 
 const lineChartData = [
   {
-    name: "Mobile apps",
+    name: "Esperado",
     data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
   },
   {
-    name: "Websites",
+    name: "Consumido",
     data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-  },
-];
-
-const customersData = [
-  {
-    name: "New Customers",
-    data: [50, 60, 140, 190, 180, 230],
   },
 ];
 
@@ -71,14 +49,12 @@ const getChartData = () =>
 
 const Dashboard = () => {
   const [barChartData, setBarChartData] = useState<any | null>(null);
-  const [trafficSourceData, setTrafficSourceData] = useState<any | null>(null);
   const { tokens } = useTheme();
 
   useEffect(() => {
     const doChartData = async () => {
       const result = await getChartData();
       setBarChartData(result);
-      setTrafficSourceData([112332, 123221, 432334, 342334, 133432]);
     };
 
     doChartData();
@@ -97,70 +73,32 @@ const Dashboard = () => {
         >
           <View rowSpan={{ base: 1, large: 1 }}>
             <MiniStatistics
-              title="Page Views"
-              amount="321,236"
-              icon={<MdRemoveRedEye />}
+              title="Cantidad de comida hoy"
+              amount="20 g"
+              icon={<MdFoodBank  />}
             />
           </View>
           <View rowSpan={{ base: 1, large: 1 }}>
-            <MiniStatistics title="Visits" amount="251,607" icon={<MdWeb />} />
+            <MiniStatistics title="Cantidad de comida recomendada" amount="79 g" icon={<MdWeb />} />
           </View>
           <View rowSpan={{ base: 1, large: 1 }}>
-            <MiniStatistics
-              title="Unique Visitors"
-              amount="23,762"
-              icon={<MdPermIdentity />}
-            />
+            <LoadingButton />
           </View>
 
           <View columnSpan={[1, 1, 1, 2]} rowSpan={{ base: 3, large: 4 }}>
             <Card borderRadius="15px">
-              <div className="card-title">Traffic Summary</div>
+              <div className="card-title">Distribución de comida durante el día</div>
               <div className="chart-wrap">
                 {barChartData ? (
                   <div className="row">
                     <TrafficSummary
-                      title="Traffic Summary"
+                      title="Distribución de comida durante el día"
                       data={barChartData}
                       type="bar"
                       labels={[
-                        "2022-01-20",
-                        "2022-01-21",
-                        "2022-01-22",
-                        "2022-01-23",
-                        "2022-01-24",
-                        "2022-01-25",
-                        "2022-01-26",
-                        "2022-01-27",
-                        "2022-01-28",
-                        "2022-01-29",
-                        "2022-01-30",
-                        "2022-02-01",
-                        "2022-02-02",
-                        "2022-02-03",
-                        "2022-02-04",
-                        "2022-02-05",
-                        "2022-02-06",
-                        "2022-02-07",
-                        "2022-02-08",
-                        "2022-02-09",
-                        "2022-02-10",
-                        "2022-02-11",
-                        "2022-02-12",
-                        "2022-02-13",
-                        "2022-02-14",
-                        "2022-02-15",
-                        "2022-02-16",
-                        "2022-02-17",
-                        "2022-02-18",
-                        "2022-02-19",
-                        "2022-02-20",
-                        "2022-02-21",
-                        "2022-02-22",
-                        "2022-02-23",
-                        "2022-02-24",
-                        "2022-02-25",
-                        "2022-02-26",
+                        "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00",
+                        "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00",
+                        "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
                       ]}
                     />
                   </div>
@@ -177,36 +115,20 @@ const Dashboard = () => {
           </View>
           <View rowSpan={{ base: 1, large: 4 }}>
             <Card height="100%" borderRadius="15px">
-              <div className="card-title">Traffic Sources</div>
+              <div className="card-title">American Bobtail</div>
               <div className="chart-wrap">
-                {barChartData ? (
-                  <TrafficSources
-                    title="Traffic Sources"
-                    data={trafficSourceData}
-                    type="donut"
-                    labels={[
-                      "Direct",
-                      "Internal",
-                      "Referrals",
-                      "Search Engines",
-                      "Other",
-                    ]}
-                  />
-                ) : (
-                  <Flex direction="column" minHeight="285px">
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                  </Flex>
-                )}
+                <img
+                  src="https://cdn.royalcanin-weshare-online.io/GlbQCHwBBKJuub5qnL9Z/v5/bp-lot-3-american-bobtail-davinci"
+                  alt="Imagen referencial"
+                  style={{ width: "100%", height: "auto", borderRadius: "15px" }}
+                />
               </div>
             </Card>
           </View>
 
           <View columnSpan={[1, 1, 1, 2]} rowSpan={{ base: 3, large: 4 }}>
             <Card borderRadius="15px">
-              <div className="card-title">Sales Summary</div>
+              <div className="card-title">Comida esperada vs consumida</div>
               <div className="chart-wrap">
                 {barChartData ? (
                   <div className="row">
@@ -244,28 +166,20 @@ const Dashboard = () => {
 
           <View rowSpan={{ base: 1, large: 4 }}>
             <Card height="100%" borderRadius="15px">
-              <div className="card-title">New Customers</div>
+              <div className="card-title">Comida sugerida</div>
               <div className="chart-wrap">
-                {barChartData ? (
-                  <div className="row">
-                    <CustomersSummary
-                      title="CutomersSummary"
-                      data={customersData}
-                      type="line"
-                      labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun"]}
-                    />
-                  </div>
-                ) : (
-                  <Flex direction="column" minHeight="285px">
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                    <Placeholder size="small" />
-                  </Flex>
-                )}
+                <img
+                  src="https://cdn.royalcanin-weshare-online.io/9Gkua2QBG95Xk-RBh9KI/v598/16-indoor-27-b1-ne?fm=jpg&auto=compress"
+                  alt="Comida sugerida"
+                  style={{ width: "100%", height: "auto", borderRadius: "15px" }}
+                />
+                <div style={{ padding: "1rem", textAlign: "center" }}>
+                  Esta es la comida sugerida para tu mascota. Ayuda a mantener su peso ideal y salud óptima.
+                </div>
               </div>
             </Card>
           </View>
+
         </Grid>
       </View>
     </>

@@ -71,7 +71,7 @@ const defaultOptions = {
     axisBorder: {
       show: false,
     },
-    type: "datetime",
+    type: "category", // Changed from "datetime" to "category"
   },
   yaxis: {
     labels: {
@@ -90,7 +90,7 @@ const BarChart = ({ data, type, labels, options }: BarChartProps) => (
     type={type as any}
     height={284}
     width="100%"
-    options={Object.assign({}, defaultOptions, options, { labels })}
+    options={Object.assign({}, defaultOptions, options, { xaxis: { ...defaultOptions.xaxis, categories: labels } })}
   />
 );
 
